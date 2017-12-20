@@ -10,15 +10,28 @@ import UIKit
 
 class UserTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    var user: User? {
+        didSet {
+            self.updateViews()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func updateViews() {
+        guard let user = self.user else { return }
+        
+        profileImage.layer.masksToBounds = false
+        profileImage.layer.cornerRadius = profileImage.frame.height/2
+        profileImage.clipsToBounds = true
+        profileImage.image = user.profilePicture
+        firstNameLabel.text = user.firstName
+        lastNameLabel.text = user.lastName
     }
-
 }
